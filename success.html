@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Paiement réussi — CVMeilleur</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<div class="page">
+  <section class="section">
+    <div class="section-title">
+      <h2>Paiement réussi ✅</h2>
+      <p>Ton accès est maintenant débloqué. Redirection en cours…</p>
+    </div>
+
+    <div class="card" style="max-width:520px;">
+      <p style="color: var(--muted); margin:0;">
+        Merci ! Tu peux maintenant télécharger ton CV.
+      </p>
+    </div>
+  </section>
+</div>
+
+<script>
+  const params = new URLSearchParams(window.location.search);
+  const plan = params.get("plan") || "download";
+
+  localStorage.setItem("paid", "true");
+  localStorage.setItem("paid_plan", plan);
+  localStorage.setItem("paid_at", new Date().toISOString());
+
+  setTimeout(() => {
+    window.location.href = "ameliorer.html";
+  }, 1200);
+</script>
+
+</body>
+</html>

@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CVMeilleur — Créez un CV professionnel</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+
+<body>
+<div class="page">
+
+  <!-- Header -->
+  <header class="header">
+    <div class="brand">
+      <div class="logo-dot"></div>
+      <div class="brand-name">CVMeilleur</div>
+    </div>
+
+    <!-- ✅ NAV FINAL -->
+    <nav class="nav" id="navMenu">
+
+      <!-- ✅ Connexion -->
+      <a class="nav-btn" id="loginBtn" href="login.html">Connexion</a>
+
+      <!-- ✅ Déconnexion (caché tant que pas connecté) -->
+      <button class="nav-btn" id="logoutBtn"
+        style="display:none; border:none; cursor:pointer;">
+        Déconnexion
+      </button>
+
+    </nav>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-content">
+      <span class="pill">Optimisé Québec • ATS-friendly • Simple</span>
+      <h1>Créez un CV professionnel<br/>en quelques minutes.</h1>
+      <p>
+        CVMeilleur vous guide pas à pas pour générer un CV clair, moderne
+        et adapté au marché du travail québécois.
+      </p>
+
+      <div class="hero-actions">
+        <a class="btn-primary" href="creation.html">Créer mon CV</a>
+        <a class="btn-outline" href="evaluer.html">Évaluer mon CV</a>
+      </div>
+
+      <div class="hero-stats">
+        <div class="stat">
+          <div class="stat-number">3</div>
+          <div class="stat-label">Templates V1</div>
+        </div>
+        <div class="stat">
+          <div class="stat-number">A4</div>
+          <div class="stat-label">PDF propre</div>
+        </div>
+        <div class="stat">
+          <div class="stat-number">+</div>
+          <div class="stat-label">Conseils Québec</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Preview card -->
+    <div class="hero-preview">
+      <div class="preview-card">
+        <div class="preview-top">
+          <div class="avatar"></div>
+          <div>
+            <div class="preview-name">Antoine Duguay</div>
+            <div class="preview-role">Analyste de données</div>
+          </div>
+        </div>
+
+        <div class="preview-score">
+          <div class="score-left">
+            <div class="score-title">Score CV</div>
+            <div class="score-sub">Lisibilité • Structure • ATS</div>
+          </div>
+          <div class="score-badge">92%</div>
+        </div>
+
+        <div class="preview-lines">
+          <div class="line w90"></div>
+          <div class="line w70"></div>
+          <div class="line w85"></div>
+          <div class="line w60"></div>
+          <div class="line w80"></div>
+        </div>
+
+        <div class="preview-footer">
+          <span class="tag">1 page</span>
+          <span class="tag">PDF A4</span>
+          <span class="tag">Québec</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section class="section">
+    <div class="section-title">
+      <h2>Tout ce qu’il faut pour un CV convaincant</h2>
+      <p>Simple, rapide, et pensé pour le marché québécois.</p>
+    </div>
+
+    <div class="grid-4">
+      <div class="card">
+        <div class="icon">🧱</div>
+        <h3>Structure claire</h3>
+        <p>Sections propres, lisibles, et faciles à scanner par les recruteurs.</p>
+      </div>
+      <div class="card">
+        <div class="icon">✅</div>
+        <h3>ATS-friendly</h3>
+        <p>Design compatible avec les systèmes de tri automatique (ATS).</p>
+      </div>
+      <div class="card">
+        <div class="icon">🎯</div>
+        <h3>Adapté Québec</h3>
+        <p>Bon format, bonnes pratiques et style attendu au Canada/Québec.</p>
+      </div>
+      <div class="card">
+        <div class="icon">📄</div>
+        <h3>PDF propre</h3>
+        <p>Export A4 soigné, prêt à envoyer sans retouches.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- How it works -->
+  <section class="section alt">
+    <div class="section-title">
+      <h2>Comment ça marche</h2>
+      <p>Un parcours simple, efficace et professionnel</p>
+    </div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <h3>Remplissez vos infos</h3>
+          <p>Nom, expériences, compétences, études… rapidement.</p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <h3>Choisissez un template</h3>
+          <p>Un style moderne et professionnel (V1 = 3 templates).</p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <h3>Téléchargez en PDF</h3>
+          <p>PDF A4 propre, prêt à envoyer aux employeurs.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Examples -->
+  <section class="section" id="exemples">
+    <div class="section-title">
+      <h2>Exemples de CV</h2>
+      <p>Voici le style que vous obtiendrez (version démo).</p>
+    </div>
+
+    <div class="examples">
+      <div class="example-card">
+        <div class="example-badge">Template 1</div>
+        <div class="example-thumb"></div>
+        <div class="example-title">Classique Pro</div>
+        <div class="example-sub">Simple • ATS • 1 page</div>
+      </div>
+
+      <div class="example-card">
+        <div class="example-badge">Template 2</div>
+        <div class="example-thumb"></div>
+        <div class="example-title">Tech Moderne</div>
+        <div class="example-sub">Projets • Compétences • Clean</div>
+      </div>
+
+      <div class="example-card">
+        <div class="example-badge">Template 3</div>
+        <div class="example-thumb"></div>
+        <div class="example-title">Deux Colonnes</div>
+        <div class="example-sub">Visuel • Rapide à lire</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta">
+    <div class="cta-box">
+      <h2>Prêt à créer un CV qui convainc ?</h2>
+      <p>Commencez gratuitement, puis on améliorera au fur et à mesure.</p>
+      <div class="cta-actions">
+        <a class="btn-primary" href="creation.html">Créer mon CV</a>
+        <a class="btn-outline light" href="evaluer.html">Évaluer mon CV</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div>
+        <div class="footer-brand">CVMeilleur</div>
+        <div class="footer-note">CV optimisé Québec — Simple, clair, efficace.</div>
+      </div>
+
+      <div class="footer-links">
+        <a href="#">Confidentialité</a>
+        <a href="#">Conditions</a>
+        <a href="#">Contact</a>
+      </div>
+    </div>
+  </footer>
+
+</div>
+
+<!-- ✅ SCRIPT : AFFICHAGE CONNEXION / DÉCONNEXION -->
+<script>
+  const loginBtn = document.getElementById("loginBtn");
+  const logoutBtn = document.getElementById("logoutBtn");
+
+  const isConnected = localStorage.getItem("connected") === "true";
+  const profile = localStorage.getItem("userProfile");
+
+  if (isConnected && profile) {
+    loginBtn.style.display = "none";
+    logoutBtn.style.display = "inline-block";
+  } else {
+    loginBtn.style.display = "inline-block";
+    logoutBtn.style.display = "none";
+  }
+
+  logoutBtn.addEventListener("click", () => {
+    localStorage.removeItem("connected");
+    localStorage.removeItem("userProfile");
+    window.location.href = "login.html";
+  });
+</script>
+
+</body>
+</html>

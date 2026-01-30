@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Créer un compte — CVMeilleur</title>
+
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+
+<body>
+<div class="page">
+
+  <header class="header">
+    <div class="brand">
+      <div class="logo-dot"></div>
+      <div class="brand-name">CVMeilleur</div>
+    </div>
+    <nav class="nav">
+      <a href="index.html">Accueil</a>
+      <a class="nav-btn" href="login.html">Connexion</a>
+    </nav>
+  </header>
+
+  <section class="section">
+    <div class="section-title" style="text-align:center;">
+      <h2>Créer un compte</h2>
+      <p>Ton profil sera sauvegardé pour ne plus retaper tes coordonnées ✅</p>
+    </div>
+
+    <div class="card auth-card">
+      <div class="auth-grid">
+        <input id="fullName" placeholder="Nom complet" />
+        <input id="phone" placeholder="Téléphone (ex: +1 514 123 4567)" />
+        <input id="email" type="email" placeholder="Adresse email" />
+        <input id="password" type="password" placeholder="Mot de passe" />
+      </div>
+
+      <button class="btn-primary auth-btn" id="signupBtn">
+        Créer mon compte
+      </button>
+
+      <p id="message" class="auth-msg"></p>
+
+      <p class="auth-link">
+        Déjà un compte ? <a href="login.html"><strong>Se connecter</strong></a>
+      </p>
+
+      <p class="auth-link">
+        <a href="index.html">← Retour à l'accueil</a>
+      </p>
+    </div>
+  </section>
+
+</div>
+
+<script>
+  const SUPABASE_URL = "https://dwglkvlhkfxnxaykibok.supabase.co";
+  const SUPABASE_ANON_KEY = "sb_publishable_If-9PzCJImCraAsv2me2Uw_fAFL4rB-";
+  const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+  const signupBtn = document.getElementById("signupBtn");
+  const msg = document.getElementById("message");
+
+  signupBtn.addEventListener("click", async () => {
+    msg.textContent = "";
+    msg.style.color = "#d93025";
+
+    const fullName = document.getElementById("fullName").value.trim();
+    const phone = document.getElementById("phone").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value.trim();
+
+    if (!fullName || !email || !password) {
+      msg.textContent = "⚠️ Nom, email et mot de passe sont obligatoires.";
+      return;
+    }
+
+    // 1) Créer user
+    const { data, error } = await supabaseClient.auth.signUp({ email, password });
+
+    if (error) {
+      msg.textContent = "❌ Erreur : " + error.message;
+      return;
+    }
+
+    // 2) Si session dispo, on met à jour le profil (optionnel)
+    // Sinon, le trigger crée déjà la ligne et l'utilisateur pourra compléter après login.
+    if (data.user?.id) {
+      await supabaseClient
+        .from("profiles")
+        .update({ full_name: fullName, phone: phone })
+        .eq("id", data.user.id);
+    }
+
+    msg.style.color = "#16a34a";
+    msg.textContent = "✅ Compte créé ! Tu peux maintenant te connecter.";
+    setTimeout(() => window.location.href = "login.html", 1200);
+  });
+</script>
+
+</body>
+</html>

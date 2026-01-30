@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Connexion — CVMeilleur</title>
+
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+
+<body>
+<div class="page">
+
+  <header class="header">
+    <div class="brand">
+      <div class="logo-dot"></div>
+      <div class="brand-name">CVMeilleur</div>
+    </div>
+    <nav class="nav">
+      <a href="index.html">Accueil</a>
+      <a class="nav-btn" href="signup.html">Créer un compte</a>
+    </nav>
+  </header>
+
+  <section class="section">
+    <div class="section-title" style="text-align:center;">
+      <h2>Connexion</h2>
+      <p>Connecte-toi pour retrouver tes coordonnées automatiquement ✅</p>
+    </div>
+
+    <div class="card auth-card">
+      <div class="auth-grid">
+        <input id="email" type="email" placeholder="Adresse email" />
+        <input id="password" type="password" placeholder="Mot de passe" />
+      </div>
+
+      <button class="btn-primary auth-btn" id="loginBtn">
+        Se connecter
+      </button>
+
+      <p id="message" class="auth-msg"></p>
+
+      <p class="auth-link">
+        Pas de compte ? <a href="signup.html"><strong>Créer un compte</strong></a>
+      </p>
+
+      <p class="auth-link">
+        <a href="index.html">← Retour à l'accueil</a>
+      </p>
+    </div>
+  </section>
+
+</div>
+
+<script>
+  console.log("✅ login.html chargé");
+
+  // ✅ TES INFOS SUPABASE
+  const SUPABASE_URL = "https://dwglkvlhkfxnxaykibok.supabase.co";
+  const SUPABASE_ANON_KEY = "sb_publishable_If-9PzCJImCraAsv2me2Uw_fAFL4rB-";
+
+  const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+  const loginBtn = document.getElementById("loginBtn");
+  const msg = document.getElementById("message");
+
+  loginBtn.addEventListener("click", async () => {
+    msg.textContent = "";
+    msg.style.color = "#d93025";
+
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value.trim();
+
+    if (!email || !password) {
+      msg.textContent = "⚠️ Veuillez remplir email + mot de passe.";
+      return;
+    }
+
+    const { data, error } = await supabaseClient.auth.signInWithPassword({
+      email,
+      password
+    });
+
+    if (error) {
+      msg.textContent = "❌ Erreur : " + error.message;
+      return;
+    }
+
+    const userId = data.user?.id;
+
+    // ✅ récupérer le profil depuis profiles
+    const { data: profile, error: profileError } = await supabaseClient
+      .from("profiles")
+      .select("*")
+      .eq("id", userId)
+      .single();
+
+    if (profileError) {
+      msg.textContent = "❌ Erreur profil : " + profileError.message;
+      return;
+    }
+
+    // ✅ stocker dans localStorage
+    localStorage.setItem("connected", "true");
+    localStorage.setItem("userProfile", JSON.stringify({
+      name: profile?.full_name || "",
+      email: data.user.email || "",
+      phone: profile?.phone || ""
+    }));
+
+    msg.style.color = "#16a34a";
+    msg.textContent = "✅ Connexion réussie ! Redirection...";
+
+    setTimeout(() => {
+      window.location.href = "creation.html";
+    }, 700);
+  });
+</script>
+
+</body>
+</html>

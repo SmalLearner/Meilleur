@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Créer mon CV — CVMeilleur</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="cv-container">
+
+  <!-- 🔐 PROTECTION CONNEXION -->
+  <script>
+    if (localStorage.getItem("connected") !== "true") {
+      window.location.href = "login.html";
+    }
+  </script>
+
+  <!-- ÉTAPES -->
+  <div class="cv-steps">
+    <div class="cv-step active">Coordonnées</div>
+    <div class="cv-step">Expérience</div>
+    <div class="cv-step">Formation</div>
+    <div class="cv-step">Compétences</div>
+    <div class="cv-step">Résumé</div>
+    <div class="cv-step">Finaliser</div>
+  </div>
+
+  <div class="cv-builder">
+
+    <!-- ================= FORM ================= -->
+    <div class="cv-form">
+
+      <!-- STEP 0 -->
+      <div class="form-step active">
+        <h2>Coordonnées</h2>
+        <input id="nameInput" placeholder="Nom complet" oninput="updateAll()">
+        <input id="jobInput" placeholder="Profession (ex: Analyste de données)" oninput="updateAll()">
+        <input id="emailInput" placeholder="Email" oninput="updateAll()">
+        <input id="phoneInput" placeholder="Téléphone (ex: +1 514 123 4567)" oninput="updateAll()" onblur="validatePhoneFinal()">
+        <small id="phoneError" class="error-msg">Numéro invalide</small>
+      </div>
+
+      <!-- STEP 1 -->
+      <div class="form-step">
+        <h2>Expérience</h2>
+
+        <div id="experienceList">
+          <div class="exp-block">
+            <input placeholder="Entreprise (ex: Hydro-Québec)" oninput="updateAll()">
+            <input placeholder="Poste (ex: Analyste de données)" oninput="updateAll()">
+
+            <div class="row">
+              <input class="year-input start-year" inputmode="numeric" maxlength="4"
+                     placeholder="Année début" oninput="updateAll()">
+              <input class="year-input end-year" inputmode="numeric" maxlength="4"
+                     placeholder="Année fin" oninput="updateAll()">
+            </div>
+
+            <small class="error-msg year-error">Années invalides (AAAA, début ≤ fin)</small>
+
+            <textarea placeholder="Description (missions, résultats…)" oninput="updateAll()"></textarea>
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button class="add-btn" onclick="addExperience()">+ Ajouter</button>
+          <button class="remove-btn" id="removeExpBtn" onclick="removeExperience()">Supprimer</button>
+        </div>
+      </div>
+
+      <!-- STEP 2 -->
+      <div class="form-step">
+        <h2>Formation</h2>
+
+        <div id="educationList">
+          <div class="edu-block">
+            <input placeholder="Diplôme (ex: Baccalauréat en informatique)" oninput="updateAll()">
+            <input placeholder="Établissement (ex: Université de Montréal)" oninput="updateAll()">
+
+            <div class="row">
+              <input class="year-input start-year" inputmode="numeric" maxlength="4"
+                     placeholder="Année début" oninput="updateAll()">
+              <input class="year-input end-year" inputmode="numeric" maxlength="4"
+                     placeholder="Année fin" oninput="updateAll()">
+            </div>
+
+            <small class="error-msg year-error">Années invalides (AAAA, début ≤ fin)</small>
+
+            <textarea placeholder="Cours, projets, distinctions…" oninput="updateAll()"></textarea>
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button class="add-btn" onclick="addEducation()">+ Ajouter</button>
+          <button class="remove-btn" id="removeEduBtn" onclick="removeEducation()">Supprimer</button>
+        </div>
+      </div>
+
+      <!-- STEP 3 -->
+      <div class="form-step">
+        <h2>Compétences</h2>
+        <textarea id="skillsInput" placeholder="Python, SQL, Power BI…" oninput="updateAll()"></textarea>
+      </div>
+
+      <!-- STEP 4 -->
+      <div class="form-step">
+        <h2>Résumé</h2>
+        <textarea id="summaryInput" placeholder="Résumé professionnel" oninput="updateAll()"></textarea>
+      </div>
+
+      <!-- STEP 5 -->
+      <div class="form-step">
+        <h2>Finaliser</h2>
+        <button class="btn-primary">Télécharger le CV</button>
+      </div>
+
+      <!-- NAV -->
+      <div class="form-nav">
+        <button id="prevBtn" class="btn-outline" onclick="prevStep()">Retour</button>
+        <button class="btn-primary" onclick="nextStep()">Suivant</button>
+      </div>
+
+    </div>
+
+    <!-- ================= PREVIEW ================= -->
+    <div class="cv-preview">
+      <h3>Aperçu du CV</h3>
+      <div class="preview-box" id="livePreview"></div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+let currentStep = 0;
+const steps = document.querySelectorAll(".form-step");
+const indicators = document.querySelectorAll(".cv-step");
+
+function showStep(i){
+  steps.forEach((s,n)=>s.classList.toggle("active", n === i));
+  indicators.forEach((s,n)=>s.classList.toggle("active", n <= i));
+
+  const prev = document.getElementById("prevBtn");
+  prev.disabled = i === 0;
+  prev.style.opacity = i === 0 ? "0.4" : "1";
+}
+
+function nextStep(){ if(currentStep < steps.length-1){ currentStep++; showStep(currentStep); } }
+function prevStep(){ if(currentStep > 0){ currentStep--; showStep(currentStep); } }
+
+function validatePhoneFinal(){
+  const ok=/^\+?\d{6,}$/.test(phoneInput.value);
+  phoneError.style.display = phoneInput.value && !ok ? "block" : "none";
+}
+
+/* ---------- BLOCS ---------- */
+function addExperience(){ cloneBlock("experienceList","exp-block"); }
+function removeExperience(){ removeBlock("experienceList"); }
+function addEducation(){ cloneBlock("educationList","edu-block"); }
+function removeEducation(){ removeBlock("educationList"); }
+
+function cloneBlock(id,cls){
+  const b=document.querySelector("."+cls).cloneNode(true);
+  b.querySelectorAll("input,textarea").forEach(e=>e.value="");
+  document.getElementById(id).appendChild(b);
+  updateButtons(); updateAll();
+}
+
+function removeBlock(id){
+  const l=document.getElementById(id);
+  if(l.children.length>1) l.removeChild(l.lastElementChild);
+  updateButtons(); updateAll();
+}
+
+function updateButtons(){
+  removeExpBtn.style.display = experienceList.children.length>1 ? "inline" : "none";
+  removeEduBtn.style.display = educationList.children.length>1 ? "inline" : "none";
+}
+
+/* ---------- VALIDATION ANNÉES ---------- */
+function isYearValid(start, end){
+  if(!start && !end) return true;
+  if(!/^\d{4}$/.test(start) || !/^\d{4}$/.test(end)) return false;
+  return parseInt(start) <= parseInt(end);
+}
+
+/* ---------- PREVIEW ---------- */
+function updateAll(){
+  let h = `
+    <h2>${nameInput.value || "Votre nom complet"}</h2>
+    <h4>${jobInput.value || "Votre profession"}</h4>
+    <p>${emailInput.value || ""}</p>
+    <p>${phoneInput.value || ""}</p>
+    <hr>
+  `;
+
+  document.querySelectorAll(".exp-block").forEach(b=>{
+    const i=b.querySelectorAll("input,textarea");
+    const ok=isYearValid(i[2].value,i[3].value);
+    b.querySelector(".year-error").style.display = ok ? "none" : "block";
+    if(ok && i[0].value){
+      h+=`<p><strong>${i[1].value}</strong> — ${i[0].value} (${i[2].value}–${i[3].value})<br>${i[4].value}</p>`;
+    }
+  });
+
+  document.querySelectorAll(".edu-block").forEach(b=>{
+    const i=b.querySelectorAll("input,textarea");
+    const ok=isYearValid(i[2].value,i[3].value);
+    b.querySelector(".year-error").style.display = ok ? "none" : "block";
+    if(ok && i[0].value){
+      h+=`<p><strong>${i[0].value}</strong>, ${i[1].value} (${i[2].value}–${i[3].value})</p>`;
+    }
+  });
+
+  if(skillsInput.value) h+=`<p><strong>Compétences :</strong> ${skillsInput.value}</p>`;
+  if(summaryInput.value) h+=`<p><strong>Résumé :</strong> ${summaryInput.value}</p>`;
+
+  livePreview.innerHTML = h;
+}
+
+/* AUTO PROFIL */
+function fillFromProfile(){
+  try{
+    const p=JSON.parse(localStorage.getItem("userProfile")||"{}");
+    if(p.name) nameInput.value=p.name;
+    if(p.email) emailInput.value=p.email;
+    if(p.phone) phoneInput.value=p.phone;
+  }catch(e){}
+}
+
+document.addEventListener("DOMContentLoaded",()=>{
+  updateButtons();
+  showStep(0);
+  fillFromProfile();
+  updateAll();
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Évaluer mon CV — CVMeilleur</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+
+<body>
+<div class="page">
+
+  <!-- Header (même style que index) -->
+  <header class="header">
+    <div class="brand">
+      <div class="logo-dot"></div>
+      <div class="brand-name">CVMeilleur</div>
+    </div>
+
+    <nav class="nav">
+      <a href="index.html#exemples">Exemples</a>
+      <a href="index.html#comment">Comment ça marche</a>
+      <a href="index.html#faq">FAQ</a>
+      <a class="nav-btn" href="creation.html">Créer mon CV</a>
+    </nav>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-content">
+      <span class="pill">Optimisé Québec • ATS-friendly • Analyse rapide</span>
+      <h1>Évalue ton CV<br/>en 30 secondes ✅</h1>
+      <p>
+        Téléverse ton CV (PDF ou Word). On te donne un score et des recommandations
+        claires adaptées au marché québécois.
+      </p>
+
+      <div class="hero-actions">
+        <a class="btn-outline" href="index.html">Retour Accueil</a>
+        <button class="btn-primary" id="scrollToUpload">Analyser maintenant</button>
+      </div>
+
+      <div class="hero-stats">
+        <div class="stat">
+          <div class="stat-number">ATS</div>
+          <div class="stat-label">Compatibilité</div>
+        </div>
+        <div class="stat">
+          <div class="stat-number">+</div>
+          <div class="stat-label">Mots clés</div>
+        </div>
+        <div class="stat">
+          <div class="stat-number">90%</div>
+          <div class="stat-label">Objectif score</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Preview score -->
+    <div class="hero-preview">
+      <div class="preview-card">
+        <div class="preview-top">
+          <div class="avatar"></div>
+          <div>
+            <div class="preview-name">Score CV</div>
+            <div class="preview-role">Lisibilité • Structure • ATS</div>
+          </div>
+        </div>
+
+        <!-- Carte Score (ton style déjà existant) -->
+        <div class="score-card">
+          <div class="score-title">Résultat global</div>
+
+          <div class="score-preview">
+            <div class="score-ring-wrapper">
+              <svg class="score-ring" viewBox="0 0 36 36">
+                <path
+                  d="M18 2.0845
+                     a 15.9155 15.9155 0 0 1 0 31.831
+                     a 15.9155 15.9155 0 0 1 0 -31.831"
+                  fill="none"
+                  stroke="#eee"
+                  stroke-width="3"
+                />
+                <path
+                  id="scoreArc"
+                  d="M18 2.0845
+                     a 15.9155 15.9155 0 0 1 0 31.831
+                     a 15.9155 15.9155 0 0 1 0 -31.831"
+                  fill="none"
+                  stroke="#3DDC97"
+                  stroke-width="3"
+                  stroke-dasharray="0, 100"
+                  stroke-linecap="round"
+                />
+              </svg>
+
+              <div class="score-center">
+                <div class="score-number" id="scoreNumber">--</div>
+                <div class="score-label">/100</div>
+              </div>
+            </div>
+
+            <div class="legend-card">
+              <div><span class="dot red"></span> 0–59 : À corriger</div>
+              <div><span class="dot orange"></span> 60–79 : Bon</div>
+              <div><span class="dot green"></span> 80–100 : Prêt ✅</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Upload + Analyse -->
+  <section class="section" id="uploadSection">
+    <div class="section-title">
+      <h2>Analyse de votre CV</h2>
+      <p>Téléverse ton CV et obtiens un score + des recommandations immédiates.</p>
+    </div>
+
+    <div class="improve-card">
+      <div class="upload-zone" id="uploadZone">
+        <input type="file" id="cvFile" accept=".pdf,.doc,.docx" hidden />
+
+        <div class="upload-icon">📄</div>
+        <div class="upload-title">Glisse-dépose ton CV ici</div>
+        <div class="upload-sub">ou clique pour sélectionner un fichier</div>
+
+        <div class="file-chip" id="fileChip" style="display:none;">
+          <span id="fileName">cv.pdf</span>
+          <button class="chip-x" id="removeFile" aria-label="Retirer">✕</button>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button class="btn-primary" id="analyzeBtn">Analyser mon CV</button>
+      </div>
+
+      <div class="progress-wrap" id="progressWrap" style="display:none; margin-top:14px;">
+        <div class="progress-text" id="progressText">Analyse en cours…</div>
+        <div class="progress-bar">
+          <div class="progress-fill" id="progressFill"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Résultats -->
+  <section class="section alt" id="results" style="display:none;">
+    <div class="section-title">
+      <h2>Résultat de l’évaluation</h2>
+      <p>Conseils adaptés au marché québécois (ATS + lecture recruteur).</p>
+    </div>
+
+    <div class="grid-4" style="grid-template-columns: 1fr 1fr; align-items:start;">
+
+      <div class="card">
+        <h3> Points forts</h3>
+        <ul id="badList"></ul>
+      </div>
+
+      <div class="card">
+        <h3>⚠️ À améliorer</h3>
+        <ul id="goodList"></ul>
+      </div>
+
+      <div class="card" style="grid-column: 1 / -1;">
+        <h3>Prochaine étape</h3>
+        <p style="color: var(--muted); margin-top:6px;">
+          Tu veux corriger ton CV et obtenir une version optimisée avec l’IA ?
+        </p>
+
+        <div class="form-actions">
+          <a class="btn-primary" href="ameliorer.html">✨ Améliorer mon CV</a>
+          <a class="btn-outline" style="border-color:#0E3B2E; color:#0E3B2E;" href="creation.html">📄 Créer un CV</a>
+        </div>
+
+        <p style="margin-top:10px; color: var(--muted); font-size: 13px;">
+          Astuce : au Québec, un CV simple + résultats mesurables = plus d’entretiens.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer (même style que index) -->
+  <footer class="footer" id="faq">
+    <div class="footer-inner">
+      <div>
+        <div class="footer-brand">CVMeilleur</div>
+        <div class="footer-note">Évaluation CV — Optimisé Québec.</div>
+      </div>
+
+      <div class="footer-links">
+        <a href="#">Confidentialité</a>
+        <a href="#">Conditions</a>
+        <a href="#">Contact</a>
+      </div>
+    </div>
+  </footer>
+
+</div>
+<!-- PDF.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+
+<!-- Mammoth.js (DOCX) -->
+<script src="https://unpkg.com/mammoth/mammoth.browser.min.js"></script>
+<script src="evaluer.js"></script>
+</body>
+</html>

@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Améliorer mon CV — CVMeilleur</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="cv-container">
+
+  <!-- 🔐 VERROU CONNEXION -->
+  <script>
+    const isConnected = localStorage.getItem("connected") === "true";
+    const profile = localStorage.getItem("userProfile");
+    if (!isConnected || !profile) {
+      window.location.href = "login.html";
+    }
+  </script>
+
+  <!-- ÉTAPES -->
+  <div class="cv-steps">
+    <div class="cv-step active">Coordonnées</div>
+    <div class="cv-step">Expérience</div>
+    <div class="cv-step">Formation</div>
+    <div class="cv-step">Compétences</div>
+    <div class="cv-step">Résumé</div>
+    <div class="cv-step">Finaliser</div>
+  </div>
+
+  <div class="cv-builder">
+
+    <!-- ================= FORMULAIRE ================= -->
+    <div class="cv-form">
+
+      <!-- STEP 0 -->
+      <div class="form-step active">
+        <h2>Coordonnées</h2>
+        <p style="color:var(--muted);font-size:14px;margin-bottom:14px;">
+          Conseil IA : mets un titre clair + infos visibles (Québec).
+        </p>
+
+        <input id="nameInput" placeholder="Nom complet" oninput="updateAll()">
+        <input id="jobInput" placeholder="Titre du poste (ex: Data Scientist)" oninput="updateAll()">
+        <input id="emailInput" placeholder="Email" oninput="updateAll()">
+        <input id="phoneInput" placeholder="Téléphone (ex: +1 514 123 4567)"
+               oninput="updateAll()" onblur="validatePhoneFinal()">
+        <small id="phoneError" class="error-msg">Numéro invalide</small>
+      </div>
+
+      <!-- STEP 1 -->
+      <div class="form-step">
+        <h2>Expérience</h2>
+        <p style="color:var(--muted);font-size:14px;margin-bottom:14px;">
+          Conseil IA : verbes d’action + résultats chiffrés.
+        </p>
+
+        <div id="experienceList">
+          <div class="exp-block">
+            <input placeholder="Entreprise (ex: Hydro-Québec)" oninput="updateAll()">
+            <input placeholder="Poste (ex: Analyste de données)" oninput="updateAll()">
+            <div class="row">
+              <input class="year-input start-year" inputmode="numeric" maxlength="4"
+                     placeholder="Année début" oninput="updateAll()">
+              <input class="year-input end-year" inputmode="numeric" maxlength="4"
+                     placeholder="Année fin" oninput="updateAll()">
+            </div>
+            <small class="error-msg year-error">Années invalides</small>
+            <textarea placeholder="Description (missions, résultats, technologies...)"
+                      oninput="updateAll()"></textarea>
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button class="add-btn" type="button" onclick="addExperience()">+ Ajouter une expérience</button>
+          <button class="remove-btn" id="removeExpBtn" type="button" onclick="removeExperience()">Supprimer</button>
+        </div>
+      </div>
+
+      <!-- STEP 2 -->
+      <div class="form-step">
+        <h2>Formation</h2>
+        <p style="color:var(--muted);font-size:14px;margin-bottom:14px;">
+          Conseil IA : cours/projets pertinents.
+        </p>
+
+        <div id="educationList">
+          <div class="edu-block">
+            <input placeholder="Diplôme (ex: Baccalauréat en informatique)" oninput="updateAll()">
+            <input placeholder="Établissement (ex: Université de Montréal)" oninput="updateAll()">
+            <div class="row">
+              <input class="year-input start-year" inputmode="numeric" maxlength="4"
+                     placeholder="Année début" oninput="updateAll()">
+              <input class="year-input end-year" inputmode="numeric" maxlength="4"
+                     placeholder="Année fin" oninput="updateAll()">
+            </div>
+            <small class="error-msg year-error">Années invalides</small>
+            <textarea placeholder="Description (cours, projets, distinctions...)"
+                      oninput="updateAll()"></textarea>
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button class="add-btn" type="button" onclick="addEducation()">+ Ajouter une formation</button>
+          <button class="remove-btn" id="removeEduBtn" type="button" onclick="removeEducation()">Supprimer</button>
+        </div>
+      </div>
+
+      <!-- STEP 3 -->
+      <div class="form-step">
+        <h2>Compétences</h2>
+        <textarea id="skillsInput"
+          placeholder="Ex: Python, SQL, Machine Learning..."
+          oninput="updateAll()"></textarea>
+      </div>
+
+      <!-- STEP 4 -->
+      <div class="form-step">
+        <h2>Résumé</h2>
+        <textarea id="summaryInput"
+          placeholder="Résumé professionnel"
+          oninput="updateAll()"></textarea>
+      </div>
+
+      <!-- STEP 5 -->
+      <div class="form-step">
+        <h2>Finaliser</h2>
+        <p style="color:var(--muted)">
+          Ton CV est prêt ✅
+        </p>
+
+        <div class="form-actions">
+          <a class="btn-primary" href="paiement.html">Télécharger</a>
+          <a class="btn-outline" href="evaluer.html"
+             style="border-color:#0E3B2E;color:#0E3B2E">Retour analyse</a>
+        </div>
+      </div>
+
+      <!-- NAVIGATION -->
+      <div class="form-nav">
+        <button type="button" class="btn-outline" id="prevBtn">Retour</button>
+        <button type="button" class="btn-primary" id="nextBtn">Suivant</button>
+      </div>
+
+    </div>
+
+    <!-- ================= APERÇU ================= -->
+    <div class="cv-preview">
+      <h3>Aperçu du CV</h3>
+      <div class="preview-box" id="livePreview"></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- SCRIPT IA + LOGIQUE EXISTANTE -->
+<script src="ameliorer.js"></script>
+
+<!-- ✅ NAVIGATION ROBUSTE (CORRECTION FINALE) -->
+<script>
+  let currentStep = 0;
+  const steps = document.querySelectorAll(".form-step");
+  const indicators = document.querySelectorAll(".cv-step");
+
+  function showStep(i){
+    steps.forEach((s,n)=>s.classList.toggle("active", n===i));
+    indicators.forEach((s,n)=>s.classList.toggle("active", n<=i));
+    document.getElementById("prevBtn").style.visibility = i === 0 ? "hidden" : "visible";
+  }
+
+  function nextStep(){
+    if(currentStep < steps.length - 1){
+      currentStep++;
+      showStep(currentStep);
+    }
+  }
+
+  function prevStep(){
+    if(currentStep > 0){
+      currentStep--;
+      showStep(currentStep);
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    showStep(0);
+    document.getElementById("nextBtn").addEventListener("click", nextStep);
+    document.getElementById("prevBtn").addEventListener("click", prevStep);
+  });
+</script>
+
+</body>
+</html>

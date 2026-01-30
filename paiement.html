@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Paiement — CVMeilleur</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <div class="page">
+
+    <!-- Header -->
+    <header class="header">
+      <div class="brand">
+        <div class="logo-dot"></div>
+        <div class="brand-name">CVMeilleur</div>
+      </div>
+
+      <nav class="nav">
+        <a href="index.html">Accueil</a>
+        <a href="evaluer.html">Évaluer</a>
+        <a href="ameliorer.html">Améliorer</a>
+      </nav>
+    </header>
+
+    <!-- Payment Section -->
+    <section class="section">
+      <div class="section-title">
+        <h2>Débloquer le téléchargement ✅</h2>
+        <p>Choisis ton option et récupère ton CV amélioré.</p>
+      </div>
+
+      <!-- ✅ 3 offres -->
+      <div class="grid-4" style="grid-template-columns: repeat(3, 1fr); max-width: 1100px;">
+
+        <!-- Offre 1 : Téléchargement -->
+        <div class="card">
+          <h3>📄 Téléchargement unique</h3>
+          <p style="color: var(--muted); margin-top:6px;">
+            Télécharge ton CV optimisé une seule fois.
+          </p>
+
+          <div style="font-size:34px; font-weight:900; margin:16px 0;">
+            6,99 $
+          </div>
+
+          <button class="btn-primary" id="payOnceBtn" type="button">
+            Payer et télécharger
+          </button>
+
+          <p style="color: var(--muted); font-size:13px; margin-top:12px;">
+            Idéal si tu veux juste un CV prêt à envoyer.
+          </p>
+        </div>
+
+        <!-- Offre 2 : Abonnement mensuel -->
+        <div class="card" style="border:2px solid #46CFA1;">
+          <h3>⭐ Abonnement mensuel</h3>
+          <p style="color: var(--muted); margin-top:6px;">
+            Améliorations illimitées + accès complet.
+          </p>
+
+          <div style="font-size:34px; font-weight:900; margin:16px 0;">
+            24,99 $ <span style="font-size:14px;font-weight:600;color:var(--muted);">/mois</span>
+          </div>
+
+          <button class="btn-primary" id="subscribeMonthlyBtn" type="button">
+            S’abonner (mensuel)
+          </button>
+
+          <p style="color: var(--muted); font-size:13px; margin-top:12px;">
+            Idéal si tu veux postuler souvent.
+          </p>
+        </div>
+
+        <!-- Offre 3 : Abonnement annuel -->
+        <div class="card">
+          <h3>💎 Abonnement annuel</h3>
+          <p style="color: var(--muted); margin-top:6px;">
+            Meilleur prix (2 mois offerts).
+          </p>
+
+          <div style="font-size:34px; font-weight:900; margin:16px 0;">
+            199 $ <span style="font-size:14px;font-weight:600;color:var(--muted);">/an</span>
+          </div>
+
+          <button class="btn-primary" id="subscribeYearlyBtn" type="button">
+            S’abonner (annuel)
+          </button>
+
+          <p style="color: var(--muted); font-size:13px; margin-top:12px;">
+            Le plus rentable ✅
+          </p>
+        </div>
+
+        <!-- Notes -->
+        <div class="card" style="grid-column: 1 / -1;">
+          <h3>🔒 Paiement sécurisé</h3>
+          <p style="color: var(--muted); margin-top:6px;">
+            Paiement via Stripe. Après paiement, ton téléchargement est débloqué automatiquement.
+          </p>
+
+          <div class="form-actions">
+            <a class="btn-outline" style="border-color:#0E3B2E;color:#0E3B2E;" href="ameliorer.html">
+              ← Retour à l’amélioration
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="footer-inner">
+        <div>
+          <div class="footer-brand">CVMeilleur</div>
+          <div class="footer-note">Paiement sécurisé — Optimisé Québec.</div>
+        </div>
+
+        <div class="footer-links">
+          <a href="#">Confidentialité</a>
+          <a href="#">Conditions</a>
+          <a href="#">Contact</a>
+        </div>
+      </div>
+    </footer>
+
+  </div>
+
+  <script src="https://js.stripe.com/v3/"></script>
+  <script src="paiement.js"></script>
+</body>
+</html>
